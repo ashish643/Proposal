@@ -1,62 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be Mine? 💖</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SBI Relationship Portal ❤️</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-   <link rel="stylesheet" href="style.css">
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#ffd6e7,#fff5f8);
+            overflow:hidden;
+        }
+
+        .container{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .proposal-screen{
+            display:none;
+            text-align:center;
+            background:white;
+            width:85%;
+            max-width:500px;
+            padding:30px;
+            border-radius:25px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+            animation:fade 0.5s ease;
+        }
+
+        .active{
+            display:block;
+        }
+
+        h1{
+            color:#ff0066;
+            font-size:35px;
+        }
+
+        p{
+            font-size:18px;
+            line-height:1.6;
+            color:#444;
+        }
+
+        .btn{
+            margin-top:25px;
+        }
+
+        .btn a{
+            text-decoration:none;
+            padding:12px 25px;
+            border-radius:12px;
+            margin:10px;
+            display:inline-block;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .yes-btn{
+            background:#28a745;
+            color:white;
+        }
+
+        .no-btn{
+            background:#dc3545;
+            color:white;
+            position:relative;
+        }
+
+        .yes-btn:hover{
+            transform:scale(1.1);
+        }
+
+        .sms-box{
+            margin-top:20px;
+            background:#e9f7ef;
+            border-left:5px solid green;
+            padding:15px;
+            border-radius:10px;
+            text-align:left;
+            font-size:14px;
+        }
+
+        #processing{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(255,255,255,0.95);
+            z-index:999;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+        }
+
+        .loader{
+            border:8px solid #f3f3f3;
+            border-top:8px solid #ff0066;
+            border-radius:50%;
+            width:70px;
+            height:70px;
+            animation:spin 1s linear infinite;
+        }
+
+        @keyframes spin{
+            100%{
+                transform:rotate(360deg);
+            }
+        }
+
+        @keyframes fade{
+            from{
+                opacity:0;
+                transform:translateY(20px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
-        <div id="proposal-1" class="proposal-screen">
-            <div id="Sowrov1" class="sticker"></div>
-            <h1>Hey <span id="JSOrganization-placeholder"></span>! 💖</h1>
-            <p>I love you more than anything. Will you be mine forever?</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">💖 Yes</a>
-                <a href="#" onclick="showProposal('proposal-2')">💔 No</a>
-            </div>
+
+<!-- SBI Notification Sound -->
+<audio id="notifySound">
+    <source src="https://notificationsounds.com/storage/sounds/file-sounds-1150-pristine.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Processing Screen -->
+<div id="processing">
+    <div class="loader"></div>
+    <h2>Processing Relationship Request... 💞</h2>
+    <p>Please wait while SBI verifies your heart 🥺</p>
+</div>
+
+<div class="container">
+
+    <!-- Proposal Screen -->
+    <div id="proposal-1" class="proposal-screen active">
+
+        <h1>Hey <span id="girlName"></span> 💖</h1>
+
+        <p>
+            You handle accounts, KYC, and YONO every day...  
+            but can you handle being the CEO of my heart forever? 😍
+        </p>
+
+        <div class="sms-box">
+            📩 SBI ALERT: ₹Unlimited Love credited successfully into your account ❤️
         </div>
 
-        <div id="proposal-2" class="proposal-screen">
-            <div id="Sowrov2" class="sticker"></div>
-            <h1>Are you sure? 🥺</h1>
-            <p>You mean everything to me. Please say yes!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">🥰 Yes</a>
-                <a href="#" onclick="showProposal('proposal-3')">😢 No</a>
-            </div>
-        </div>
+        <div class="btn">
+            <a href="#" class="yes-btn" onclick="acceptLove()">💖 Approve Loan</a>
 
-        <div id="proposal-3" class="proposal-screen">
-            <div id="Sowrov3" class="sticker"></div>
-            <h1>My heart is breaking... 💔</h1>
-            <p>I can't imagine my life without you. Please give us a chance!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">😍 Yes</a>
-                <a href="#" onclick="showProposal('proposal-4')">😭 No</a>
-            </div>
-        </div>
-
-        <div id="proposal-4" class="proposal-screen">
-            <div id="Sowrov4" class="sticker"></div>
-            <h1>Don't leave me... 😭</h1>
-            <p>You're my everything. Please say yes and make me the happiest person!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">❤️ Yes</a>
-                <a href="#" id="move-random">💔 No</a>
-            </div>
-        </div>
-
-        <div id="proposal-yes" class="proposal-screen">
-            <div id="Sowrov5" class="sticker"></div>
-            <h1>You said YES! 🥰</h1>
-            <p>I love you, <span id="JSOrganization-placeholder-5"></span>. Let's make forever amazing! 💞</p>
+            <a href="#" class="no-btn" id="moveBtn">
+                💔 Reject Application
+            </a>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- YES Screen -->
+    <div id="proposal-yes" class="proposal-screen">
+
+        <h1>Application Approved 🎉🥰</h1>
+
+        <p>
+            Congratulations <span id="girlName2"></span> ❤️  
+            Your request to become my forever person has been successfully processed.
+        </p>
+
+        <div class="sms-box">
+            📩 SBI SMS: Your relationship request has been approved successfully.  
+            No OTP required because trust level is already maximum 💞
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    // Add her name dynamically
+    const herName = prompt("Enter Her Name ❤️");
+
+    document.getElementById("girlName").innerText = herName;
+    document.getElementById("girlName2").innerText = herName;
+
+    // Notification sound
+    const sound = document.getElementById("notifySound");
+
+    // No button moving
+    const moveBtn = document.getElementById("moveBtn");
+
+    moveBtn.addEventListener("mouseover", function(){
+
+        sound.play();
+
+        alert("⚠️ SBI SERVER BUSY ⚠️\n\nTry clicking YES instead 😂");
+
+        const x = Math.random() * 300;
+        const y = Math.random() * 300;
+
+        moveBtn.style.left = x + "px";
+        moveBtn.style.top = y + "px";
+    });
+
+    // Yes button processing
+    function acceptLove(){
+
+        sound.play();
+
+        document.getElementById("processing").style.display = "flex";
+
+        setTimeout(() => {
+
+            document.getElementById("processing").style.display = "none";
+
+            document.getElementById("proposal-1").classList.remove("active");
+
+            document.getElementById("proposal-yes").classList.add("active");
+
+            confetti({
+                particleCount:200,
+                spread:120
+            });
+
+        },3000);
+    }
+
+</script>
+
 </body>
 </html>
