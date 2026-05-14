@@ -100,20 +100,10 @@ Contributions are welcome! Here's how you can help:
 
 ---
 
-## 🐜 License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/JSOrganizations/Love-Proposal/blob/main/LICENSE) file for details.
 
----
 
-## 📧 Contact
 
-For questions or feedback, feel free to reach out:  
-- **GitHub**: [JSOrganizations](https://github.com/JSOrganizations)  
-- **Project Link**: [https://github.com/JSOrganizations/Love-Proposal](https://github.com/JSOrganizations/Love-Proposal)  
-- **Telegram (Sowrov)**: [t.me/itsSowrov](https://t.me/itsSowrov)  
-- **JS Organization Channel**: [t.me/JSOrganization](https://t.me/JSOrganization)
 
----
 
-Made with ❤️ by [JSOrganizations](https://github.com/JSOrganizations) | [Telegram](https://t.me/JSOrganization)
+
