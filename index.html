@@ -5,35 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SBI Relationship Portal ❤️</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <style>
-        body{
+
+        *{
             margin:0;
             padding:0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg,#ffd6e7,#fff5f8);
-            overflow:hidden;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:Arial, sans-serif;
+            background:linear-gradient(135deg,#ffdce6,#fff5f8);
+            overflow-x:hidden;
         }
 
         .container{
+            width:100%;
+            min-height:100vh;
             display:flex;
             justify-content:center;
             align-items:center;
-            height:100vh;
+            padding:20px;
         }
 
         .proposal-screen{
             display:none;
-            text-align:center;
+            width:100%;
+            max-width:950px;
             background:white;
-            width:85%;
-            max-width:500px;
-            padding:30px;
-            border-radius:25px;
+            border-radius:30px;
+            padding:35px;
             box-shadow:0 10px 30px rgba(0,0,0,0.2);
-            animation:fade 0.5s ease;
+            text-align:center;
+            animation:fade 0.6s ease;
         }
 
         .active{
@@ -42,25 +48,65 @@
 
         h1{
             color:#ff0066;
-            font-size:35px;
+            margin-bottom:20px;
+            font-size:42px;
         }
 
         p{
-            font-size:18px;
-            line-height:1.6;
+            font-size:20px;
             color:#444;
+            line-height:1.7;
+        }
+
+        .photo-row{
+            display:flex;
+            justify-content:center;
+            gap:25px;
+            flex-wrap:wrap;
+            margin:25px 0;
+        }
+
+        .photo-card{
+            background:#fff;
+            padding:12px;
+            border-radius:20px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+            width:250px;
+        }
+
+        .photo-card img{
+            width:100%;
+            height:300px;
+            object-fit:cover;
+            border-radius:15px;
+        }
+
+        .photo-card h3{
+            margin-top:12px;
+            color:#ff0066;
+        }
+
+        .sms-box{
+            margin-top:25px;
+            background:#eefdf1;
+            border-left:6px solid green;
+            padding:18px;
+            border-radius:15px;
+            text-align:left;
+            font-size:16px;
         }
 
         .btn{
-            margin-top:25px;
+            margin-top:35px;
         }
 
         .btn a{
             text-decoration:none;
-            padding:12px 25px;
-            border-radius:12px;
-            margin:10px;
+            padding:15px 35px;
+            margin:12px;
             display:inline-block;
+            border-radius:14px;
+            font-size:20px;
             font-weight:bold;
             transition:0.3s;
         }
@@ -77,17 +123,7 @@
         }
 
         .yes-btn:hover{
-            transform:scale(1.1);
-        }
-
-        .sms-box{
-            margin-top:20px;
-            background:#e9f7ef;
-            border-left:5px solid green;
-            padding:15px;
-            border-radius:10px;
-            text-align:left;
-            font-size:14px;
+            transform:scale(1.08);
         }
 
         #processing{
@@ -97,7 +133,7 @@
             left:0;
             width:100%;
             height:100%;
-            background:rgba(255,255,255,0.95);
+            background:rgba(255,255,255,0.96);
             z-index:999;
             justify-content:center;
             align-items:center;
@@ -105,12 +141,52 @@
         }
 
         .loader{
+            width:80px;
+            height:80px;
             border:8px solid #f3f3f3;
             border-top:8px solid #ff0066;
             border-radius:50%;
-            width:70px;
-            height:70px;
             animation:spin 1s linear infinite;
+        }
+
+        .heart-photo{
+            width:320px;
+            height:320px;
+            margin:30px auto;
+            border-radius:50%;
+            overflow:hidden;
+            border:10px solid pink;
+            box-shadow:0 0 35px pink;
+        }
+
+        .heart-photo img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .love-text{
+            margin-top:20px;
+            font-size:24px;
+            color:#ff0066;
+            font-weight:bold;
+        }
+
+        .footer-box{
+            margin-top:30px;
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+
+        .footer-item{
+            background:#fff0f5;
+            padding:12px 18px;
+            border-radius:12px;
+            font-weight:bold;
+            color:#ff0066;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
         }
 
         @keyframes spin{
@@ -129,12 +205,13 @@
                 transform:translateY(0);
             }
         }
+
     </style>
 </head>
 
 <body>
 
-<!-- SBI Notification Sound -->
+<!-- Notification Sound -->
 <audio id="notifySound">
     <source src="https://notificationsounds.com/storage/sounds/file-sounds-1150-pristine.mp3" type="audio/mpeg">
 </audio>
@@ -142,48 +219,100 @@
 <!-- Processing Screen -->
 <div id="processing">
     <div class="loader"></div>
-    <h2>Processing Relationship Request... 💞</h2>
+
+    <h2 style="margin-top:20px; color:#ff0066;">
+        Processing Relationship Request... 💞
+    </h2>
+
     <p>Please wait while SBI verifies your heart 🥺</p>
 </div>
 
 <div class="container">
 
-    <!-- Proposal Screen -->
+    <!-- FIRST SCREEN -->
     <div id="proposal-1" class="proposal-screen active">
 
-        <h1>Hey <span id="girlName"></span> 💖</h1>
+        <h1>Hey Anjali 💖</h1>
+
+        <div class="photo-row">
+
+            <!-- YOUR PHOTO -->
+            <div class="photo-card">
+                <img src="your-photo.jpg" alt="">
+                <h3>Yours Truly ❤️</h3>
+            </div>
+
+            <!-- HER PHOTO -->
+            <div class="photo-card">
+                <img src="her-photo.jpg" alt="">
+                <h3>My Favourite Person 💕</h3>
+            </div>
+
+        </div>
 
         <p>
             You handle accounts, KYC, and YONO every day...  
-            but can you handle being the CEO of my heart forever? 😍
+            but can you handle being the CEO of my heart forever? 😍❤️
         </p>
 
         <div class="sms-box">
-            📩 SBI ALERT: ₹Unlimited Love credited successfully into your account ❤️
+            📩 SBI ALERT: ₹ Unlimited Love credited successfully into your account ❤️  
+            Available Balance: Happiness Unlimited 💞
         </div>
 
         <div class="btn">
-            <a href="#" class="yes-btn" onclick="acceptLove()">💖 Approve Loan</a>
+
+            <a href="#" class="yes-btn" onclick="acceptLove()">
+                💖 YES
+            </a>
 
             <a href="#" class="no-btn" id="moveBtn">
-                💔 Reject Application
+                💔 NO
             </a>
+
         </div>
+
     </div>
 
-    <!-- YES Screen -->
+    <!-- YES SCREEN -->
     <div id="proposal-yes" class="proposal-screen">
 
-        <h1>Application Approved 🎉🥰</h1>
+        <h1>Application Approved 🎉💖</h1>
+
+        <!-- BOTH PHOTO -->
+        <div class="heart-photo">
+            <img src="both-photo.jpg" alt="">
+        </div>
 
         <p>
-            Congratulations <span id="girlName2"></span> ❤️  
-            Your request to become my forever person has been successfully processed.
+            Congratulations Anjali ❤️  
+            Your relationship request has been approved successfully 💍
         </p>
 
         <div class="sms-box">
-            📩 SBI SMS: Your relationship request has been approved successfully.  
-            No OTP required because trust level is already maximum 💞
+            📩 SBI SMS:  
+            Dear Customer, your request has been approved successfully.  
+            Trust level is already MAXIMUM 💖
+        </div>
+
+        <div class="love-text">
+            You + Me = Forever ♾️❤️
+        </div>
+
+        <div class="footer-box">
+
+            <div class="footer-item">
+                💞 Lifetime Validity
+            </div>
+
+            <div class="footer-item">
+                🔒 100% Secure Love
+            </div>
+
+            <div class="footer-item">
+                💖 No Hidden Charges
+            </div>
+
         </div>
 
     </div>
@@ -192,32 +321,24 @@
 
 <script>
 
-    // Add her name dynamically
-    const herName = "Anjali";
-
-    document.getElementById("girlName").innerText = herName;
-    document.getElementById("girlName2").innerText = herName;
-
-    // Notification sound
     const sound = document.getElementById("notifySound");
 
-    // No button moving
     const moveBtn = document.getElementById("moveBtn");
 
     moveBtn.addEventListener("mouseover", function(){
 
         sound.play();
 
-        alert("⚠️ SBI SERVER BUSY ⚠️\n\nTry clicking YES instead 😂");
+        alert("⚠️ SBI SERVER BUSY ⚠️\n\nPlease click YES instead 😂❤️");
 
-        const x = Math.random() * 300;
+        const x = Math.random() * 500;
         const y = Math.random() * 300;
 
         moveBtn.style.left = x + "px";
         moveBtn.style.top = y + "px";
+
     });
 
-    // Yes button processing
     function acceptLove(){
 
         sound.play();
@@ -233,11 +354,12 @@
             document.getElementById("proposal-yes").classList.add("active");
 
             confetti({
-                particleCount:200,
-                spread:120
+                particleCount:250,
+                spread:150
             });
 
         },3000);
+
     }
 
 </script>
